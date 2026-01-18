@@ -13,6 +13,8 @@ public sealed class CreateOrderHandler(
         var order = new Order(request.CustomerId);
         await orderRepository.AddAsync(order);
 
+        await orderRepository.SaveChangesAsync(cancellationToken);
+
         return order.Id;
     }
 }

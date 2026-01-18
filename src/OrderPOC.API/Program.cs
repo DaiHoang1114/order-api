@@ -13,7 +13,8 @@ builder.Services.AddSwaggerGen();
 
 // Database
 builder.Services.AddDbContext<OrderDbContext>(opt =>
-    opt.UseSqlite("Data Source=order-poc.db"));
+    opt.UseNpgsql(
+        builder.Configuration.GetConnectionString("OrderDb")));
 
 // Repositories
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();

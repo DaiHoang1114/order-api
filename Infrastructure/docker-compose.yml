@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: orderpoc-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: orderpoc
+      POSTGRES_USER: orderpoc_user
+      POSTGRES_PASSWORD: orderpoc_password
+    ports:
+      - "5434:5432"
+    volumes:
+      - orderpoc_pgdata:/var/lib/postgresql/data
+
+volumes:
+  orderpoc_pgdata:
