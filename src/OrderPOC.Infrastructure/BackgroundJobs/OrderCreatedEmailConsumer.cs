@@ -21,6 +21,7 @@ public class OrderCreatedEmailConsumer(
     private Task SendEmailAsync(OrderCreatedIntegrationEvent evt)
     {
         logger.LogInformation("Sending email for Order {OrderId} to Customer {CustomerId}", evt.OrderId, evt.CustomerId);
-        return Task.CompletedTask;
+        throw new Exception("Simulated Email Service Failure!");
+        // return Task.CompletedTask;
     }
 }

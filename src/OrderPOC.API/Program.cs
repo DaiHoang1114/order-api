@@ -37,6 +37,8 @@ builder.Services.AddKeyedSingleton<IEventConsumer<OrderCreatedIntegrationEvent>>
     "Email",
     (sp, key) => new KafkaEventConsumer<OrderCreatedIntegrationEvent>(
         sp.GetRequiredService<IConfiguration>(),
+        sp.GetRequiredService<ILogger<KafkaEventConsumer<OrderCreatedIntegrationEvent>>>(),
+        sp.GetRequiredService<IEventProducer>(),
         groupId: "email-service"));
 
 // Register Inventory Consumer with Key "Inventory"
@@ -44,6 +46,8 @@ builder.Services.AddKeyedSingleton<IEventConsumer<OrderCreatedIntegrationEvent>>
     "Inventory",
     (sp, key) => new KafkaEventConsumer<OrderCreatedIntegrationEvent>(
         sp.GetRequiredService<IConfiguration>(),
+        sp.GetRequiredService<ILogger<KafkaEventConsumer<OrderCreatedIntegrationEvent>>>(),
+        sp.GetRequiredService<IEventProducer>(),
         groupId: "inventory-service"));
         
 builder.Services.AddHostedService<OrderCreatedEmailConsumer>();
