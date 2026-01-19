@@ -33,7 +33,7 @@ The project follows the Clean Architecture pattern with the following layers:
 Use Docker Compose to start the PostgreSQL database.
 
 ```bash
-docker-compose -f Infrastructure/docker-compose.yml up -d
+docker compose -f Infrastructure/docker-compose.yml up -d
 ```
 
 ### 2. Setup Database

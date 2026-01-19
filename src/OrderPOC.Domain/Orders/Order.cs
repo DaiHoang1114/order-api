@@ -1,5 +1,3 @@
-using OrderPOC.Domain.Customers;
-
 namespace OrderPOC.Domain.Orders;
 
 public class Order
