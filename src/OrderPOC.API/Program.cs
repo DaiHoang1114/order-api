@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using OrderPOC.Application.Orders.Commands;
 using OrderPOC.Application.Repositories;
 using OrderPOC.Infrastructure.Persistence;
+using OrderPOC.Application.Queryable;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<OrderDbContext>(opt =>
 
 // Repositories
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderQueryable, OrderQueryable>();
 
 // CQRS
 builder.Services.AddMediatR(cfg =>

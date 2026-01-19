@@ -3,7 +3,7 @@ namespace OrderPOC.Domain.Customers;
 public class Customer
 {
     public Guid Id { get; private set; }
-    public string Name { get; private set; }
+    public required string Name { get; set; }
 
     private Customer() { } // EF Core
 
