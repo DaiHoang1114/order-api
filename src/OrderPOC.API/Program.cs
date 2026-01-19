@@ -3,6 +3,7 @@ using OrderPOC.Application.Orders.Commands;
 using OrderPOC.Application.Repositories;
 using OrderPOC.Infrastructure.Persistence;
 using OrderPOC.Application.Queryable;
+using OrderPOC.API.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Exception Handling
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 // Database
 builder.Services.AddDbContext<OrderDbContext>(opt =>
@@ -33,6 +38,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 

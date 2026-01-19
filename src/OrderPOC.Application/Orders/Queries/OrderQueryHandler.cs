@@ -6,7 +6,7 @@ namespace OrderPOC.Application.Orders.Queries;
 
 public sealed class OrderQueryHandler(
     IOrderQueryable orderQueryable)
-    : IRequestHandler<GetOrderByIdQuery, OrderDto?>
+    : IRequestHandler<GetOrderByIdQuery, OrderDto>
 {
     public async Task<OrderDto> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
     {
