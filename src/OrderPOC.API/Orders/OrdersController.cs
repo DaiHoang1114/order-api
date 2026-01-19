@@ -19,10 +19,7 @@ public class OrderController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> GetById(Guid orderId)
     {
         var order = await mediator.Send(new GetOrderByIdQuery(orderId));
-        if (order is null)
-        {
-            return NotFound();
-        }
+
         return Ok(order);
     }
 
@@ -35,5 +32,4 @@ public class OrderController(IMediator mediator) : ControllerBase
 
         return CreatedAtAction(nameof(Create), new { id = orderId }, orderId);
     }
-    
 }
