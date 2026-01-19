@@ -24,6 +24,7 @@ The project follows the Clean Architecture pattern with the following layers:
 
 *   [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 *   [Docker Desktop](https://www.docker.com/products/docker-desktop/) (or Docker Engine + Compose)
+*   EF Core Global Tool (`dotnet tool install --global dotnet-ef`)
 
 ## Getting Started
 
@@ -35,13 +36,18 @@ Use Docker Compose to start the PostgreSQL database.
 docker-compose -f Infrastructure/docker-compose.yml up -d
 ```
 
-### 2. Apply Migrations
+### 2. Setup Database
 
-Navigate to the API project folder and update the database structure.
+Navigate to the project root directory and update the database structure.
+
+> **Note**: Ensure `dotnet-ef` is in your PATH. If the command fails, you might need to run `export PATH="$PATH:$HOME/.dotnet/tools"` or add it to your shell profile.
 
 ```bash
-cd src/OrderPOC.API
-dotnet ef database update --project ../OrderPOC.Infrastructure
+# Create migration (if needed)
+dotnet ef migrations add InitialCreate --project src/OrderPOC.Infrastructure --startup-project src/OrderPOC.API
+
+# Update database
+dotnet ef database update --project src/OrderPOC.Infrastructure --startup-project src/OrderPOC.API
 ```
 
 ### 3. Run the API
