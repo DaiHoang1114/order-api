@@ -1,23 +1,31 @@
 # OrderPOC
 
-OrderPOC is a Proof of Concept (POC) API for managing orders, built with .NET 8 and Clean Architecture principles. It implements CQRS using MediatR and persists data in a PostgreSQL database.
+OrderPOC is a Proof of Concept (POC) API for managing orders, built with .NET 8 and Clean Architecture (Onion Architecture) principles. It implements CQRS using MediatR, persists data in a PostgreSQL database, and uses Kafka for asynchronous messaging.
 
 ## Architecture
 
-The project follows the Clean Architecture pattern with the following layers:
+The project follows the Clean/Onion Architecture pattern with the following layers:
 
-*   **OrderPOC.Domain**: Core domain entities and business logic (e.g., `Order`, `Customer`).
-*   **OrderPOC.Application**: Application use cases (CQRS Commands and Queries), interfaces, and DTOs.
-*   **OrderPOC.Infrastructure**: Implementation of interfaces (e.g., Repositories, Database Context) and database migrations.
-*   **OrderPOC.API**: The entry point of the application (Controllers, Program.cs, Configuration).
-*   **OrderPOC.API.Infrastructure**: Specific infrastructure components for the API host (e.g., Global Exception Handling).
+*   **OrderPOC.Domain** (Core): Core domain entities and business logic (e.g., `Order`, `Customer`). This layer has no dependencies.
+*   **OrderPOC.Application** (Core): Application use cases (CQRS Commands and Queries), interfaces, and DTOs. Depends only on Domain.
+*   **OrderPOC.Infrastructure** (External): Implementation of interfaces (e.g., Repositories, Database Context, Kafka Producers/Consumers) and database migrations. Depends on Application and Domain.
+*   **OrderPOC.API** (External): The entry point of the application (Controllers, Program.cs, Configuration).
+*   **OrderPOC.API.Infrastructure** (External): Specific infrastructure components for the API host (e.g., Global Exception Handling).
+
+### Event-Driven Architecture
+
+The application uses **Kafka** to handle integration events, decoupling the main transaction from side effects like notifications or inventory updates.
+
+*   **Producers**: Publish events (e.g., `OrderCreated`) when domain actions occur.
+*   **Consumers**: Background services running in the API that listen to topics (e.g., `order.created`) to perform background tasks.
 
 ## Tech Stack
 
 *   **Framework**: .NET 8
 *   **Database**: PostgreSQL
+*   **Message Broker**: Apache Kafka
 *   **ORM**: Entity Framework Core
-*   **Patterns**: CQRS (MediatR), Repository Pattern
+*   **Patterns**: CQRS (MediatR), Repository Pattern, Onion Architecture
 *   **Containerization**: Docker Compose
 
 ## Prerequisites
